@@ -1,6 +1,8 @@
 package ru.job4j.servlets.crud;
 
 import java.util.Date;
+import java.util.Objects;
+import java.util.Random;
 
 public class User {
     private int id;
@@ -9,13 +11,17 @@ public class User {
     private String email;
     private Date createDate;
 
-    public User(int id, String name) {
-        this.id = id;
+    public User(String name) {
+        this.id = new Random().nextInt();
         this.name = name;
     }
 
-    public User(String name) {
+    public User(String name, String login, String email, Date createDate) {
+        this.id = new Random().nextInt();
         this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
     }
 
     public int getId() {
@@ -56,5 +62,22 @@ public class User {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                name.equals(user.name) &&
+                login.equals(user.login) &&
+                email.equals(user.email) &&
+                createDate.equals(user.createDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, login, email, createDate);
     }
 }
