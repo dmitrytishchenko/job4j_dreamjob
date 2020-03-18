@@ -11,14 +11,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UsersServlet extends HttpServlet {
-    private Dispatcher dispatcher = new Dispatcher();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
         StringBuilder builder = new StringBuilder("<table>");
-        for (User user : dispatcher.findAll()) {
+        for (User user : Dispatcher.getDispatcher().findAll()) {
             builder.append("<tr><td>" + user + "</td>" +
                     "<td>" +
                     "<form action=' " + req.getContextPath() + "/update' method='get'>" +
@@ -49,6 +48,6 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        dispatcher.delete(dispatcher.findById(Integer.parseInt(req.getParameter("id"))));
+        Dispatcher.getDispatcher().delete(Dispatcher.getDispatcher().findById(Integer.parseInt(req.getParameter("id"))));
     }
 }

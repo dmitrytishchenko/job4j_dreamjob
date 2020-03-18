@@ -10,9 +10,14 @@ import java.util.function.Consumer;
 public class Dispatcher {
     private final Validate logic = ValidateService.getValidateService();
     private Map<String, Consumer<User>> dispatch = new HashMap<>();
+    private static final Dispatcher DISPATCHER = new Dispatcher();
 
-    public Dispatcher() {
+    private Dispatcher() {
         init();
+    }
+
+    public static Dispatcher getDispatcher() {
+        return DISPATCHER;
     }
 
     public void createNewUser(User user) {

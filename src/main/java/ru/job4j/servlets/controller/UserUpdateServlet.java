@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UserUpdateServlet extends HttpServlet {
-    private Dispatcher dispatcher = new Dispatcher();
     private User modifyUser;
 
     @Override
@@ -20,7 +19,7 @@ public class UserUpdateServlet extends HttpServlet {
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
         if (req.getParameter("id") != null) {
             int id = Integer.parseInt(req.getParameter("id"));
-            for (User user : dispatcher.findAll()) {
+            for (User user : Dispatcher.getDispatcher().findAll()) {
                 if (user.getId() == id) {
                     modifyUser = user;
                 }
@@ -69,7 +68,7 @@ public class UserUpdateServlet extends HttpServlet {
         modifyUser.setName(req.getParameter("name"));
         modifyUser.setLogin(req.getParameter("login"));
         modifyUser.setEmail(req.getParameter("email"));
-        dispatcher.update(modifyUser);
+        Dispatcher.getDispatcher().update(modifyUser);
         doGet(req, resp);
     }
 }

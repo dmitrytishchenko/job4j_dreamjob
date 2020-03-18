@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 public class UserCreateServlet extends HttpServlet {
-    private Dispatcher dispatcher = new Dispatcher();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,11 +42,11 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        dispatcher.createNewUser(new User(
+        Dispatcher.getDispatcher().createNewUser(new User(
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
                 new Date()));
-        doGet(req, resp);
+        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }
 }
