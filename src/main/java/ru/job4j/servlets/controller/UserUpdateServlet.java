@@ -1,7 +1,7 @@
-package ru.job4j.servlets.servlet;
+package ru.job4j.servlets.controller;
 
-import ru.job4j.servlets.crud.Dispatcher;
-import ru.job4j.servlets.crud.User;
+import ru.job4j.servlets.repository.Dispatcher;
+import ru.job4j.servlets.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
