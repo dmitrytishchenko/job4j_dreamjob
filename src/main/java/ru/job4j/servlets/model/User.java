@@ -2,7 +2,6 @@ package ru.job4j.servlets.model;
 
 import java.util.Date;
 import java.util.Objects;
-import java.util.Random;
 
 public class User {
     private int id;
@@ -12,12 +11,18 @@ public class User {
     private Date createDate;
 
     public User(String name) {
-        this.id = new Random().nextInt();
         this.name = name;
     }
 
     public User(String name, String login, String email, Date createDate) {
-        this.id = new Random().nextInt();
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
+    }
+
+    public User(int id, String name, String login, String email, Date createDate) {
+        this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;

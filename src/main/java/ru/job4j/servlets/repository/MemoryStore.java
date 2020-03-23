@@ -17,8 +17,9 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public void add(User user) {
+    public User add(User user) {
         this.userList.add(user);
+        return user;
     }
 
     @Override

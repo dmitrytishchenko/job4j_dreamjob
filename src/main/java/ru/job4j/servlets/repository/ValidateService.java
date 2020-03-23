@@ -6,7 +6,8 @@ import java.util.List;
 
 public class ValidateService implements Validate {
     private static final ValidateService VALIDATE_SERVICE = new ValidateService();
-    private final Store logic = MemoryStore.getMemoryStore();
+    private final Store logic = DBStore.getInstance();
+//    private final Store logic = MemoryStore.getMemoryStore();
 
     private ValidateService() {
     }

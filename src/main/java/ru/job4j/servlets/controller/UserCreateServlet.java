@@ -1,5 +1,7 @@
 package ru.job4j.servlets.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.servlets.repository.Dispatcher;
 import ru.job4j.servlets.model.User;
 
@@ -11,7 +13,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
+
 public class UserCreateServlet extends HttpServlet {
+    private static final Logger LOG = LogManager.getLogger(UserCreateServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,6 +51,7 @@ public class UserCreateServlet extends HttpServlet {
                 req.getParameter("login"),
                 req.getParameter("email"),
                 new Date()));
+        LOG.debug("Добавлена запись, плюс вывод размер всего пользователей в базе", Dispatcher.getDispatcher().findAll().size());
         resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
     }
 }
