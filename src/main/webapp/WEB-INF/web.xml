@@ -34,12 +34,12 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>UserCreateServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.controller.UserCreateServlet</servlet-class>
+        <servlet-name>Users Controller Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.UsersController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserCreateServlet</servlet-name>
-        <url-pattern>/create</url-pattern>
+        <servlet-name>Users Controller Servlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>

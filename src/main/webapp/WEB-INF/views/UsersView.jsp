@@ -1,12 +1,14 @@
 <%@ page import="ru.job4j.servlets.model.User" %>
 <%@ page import="ru.job4j.servlets.repository.Dispatcher" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>UsersJSP</title>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/create" method="post">
+<form action="${pageContext.servletContext.contextPath}/" method="post">
     Name : <input type="text" name="name"></br>
     Login : <input type="text" name="login"></br>
     Email : <input type="text" name="email"></br>
@@ -20,19 +22,14 @@
             <th>Email</th>
             <th>Date</th>
         </tr>
-        <%for (User user : Dispatcher.getDispatcher().findAll()) {%>
+        <c:forEach items="${users}" var="user">
         <tr>
-            <td><%=user.getId()%>
-            </td>
-            <td><%=user.getName()%>
-            </td>
-            <td><%=user.getLogin()%>
-            </td>
-            <td><%=user.getEmail()%>
-            </td>
-            <td><%=user.getCreateDate()%>
-            </td>
-                <%}%>
+            <td><c:out value="${user.id}"></c:out></td>
+            <td><c:out value="${user.name}"></c:out></td>
+            <td><c:out value="${user.login}"></c:out></td>
+            <td><c:out value="${user.email}"></c:out></td>
+            <td><c:out value="${user.createDate}"></c:out></td>
+            </c:forEach>
         </tr>
     </table>
 </form>

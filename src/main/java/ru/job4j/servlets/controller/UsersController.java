@@ -14,33 +14,13 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 
-public class UserCreateServlet extends HttpServlet {
-    private static final Logger LOG = LogManager.getLogger(UserCreateServlet.class.getName());
+public class UsersController extends HttpServlet {
+    private static final Logger LOG = LogManager.getLogger(UsersController.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append("<!DOCTYPE html>" +
-                "<html lang=\"en\">" +
-                "<head>" +
-                "    <meta charset=\"UTF-8\">" +
-                "    <title>UserCreateServlet</title>" +
-                "</head>" +
-                "<body>" +
-                "<form action=' " + req.getContextPath() + "/create' method='post'>" +
-                "Name : <input type='text' name='name'/>" +
-                "<br>" +
-                "Login : <input type='text' login='login'/>" +
-                "<br>" +
-                "Email : <input type='text' email='email'/>" +
-                "<br/>" +
-                "<input type= 'submit'>" +
-                "</form>" +
-                "<br/>" +
-                "</body>" +
-                "</html>");
-        writer.flush();
+        req.setAttribute("users", Dispatcher.getDispatcher().findAll());
+        req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
     }
 
     @Override
@@ -52,6 +32,6 @@ public class UserCreateServlet extends HttpServlet {
                 req.getParameter("email"),
                 new Date()));
         LOG.debug("Добавлена запись, плюс вывод размер всего пользователей в базе", Dispatcher.getDispatcher().findAll().size());
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }
