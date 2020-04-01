@@ -10,23 +10,31 @@ public class User {
     private String email;
     private Date createDate;
 
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    private String photoId;
+
     public User(String name) {
         this.name = name;
     }
 
-    public User(String name, String login, String email, Date createDate) {
+    public User(String name, String login, String email, Date createDate, String photoId) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+        this.photoId = photoId;
     }
 
-    public User(int id, String name, String login, String email, Date createDate) {
+    public User(int id, String name, String login, String email, Date createDate, String photoId) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+        this.photoId = photoId;
     }
 
     public int getId() {

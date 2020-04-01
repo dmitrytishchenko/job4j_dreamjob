@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 
 
@@ -20,6 +19,7 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("users", Dispatcher.getDispatcher().findAll());
+        LOG.trace("Установка аттрибута users = " + Dispatcher.getDispatcher().findAll().size());
         req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
     }
 
@@ -30,8 +30,10 @@ public class UsersController extends HttpServlet {
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
-                new Date()));
-        LOG.debug("Добавлена запись, плюс вывод размер всего пользователей в базе", Dispatcher.getDispatcher().findAll().size());
+                new Date(),
+                req.getParameter("photoId")));
+        LOG.trace("Добавлен новый пользователь, всего пользователей - " + Dispatcher.getDispatcher().findAll().size());
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        LOG.trace("Переход в корень");
     }
 }

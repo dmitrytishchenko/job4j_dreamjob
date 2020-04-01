@@ -43,7 +43,8 @@ public class DBStore implements Store {
                     "name varchar(100)," +
                     "login varchar(100)," +
                     "email varchar(100)," +
-                    "create_date varchar (100))");
+                    "create_date varchar (100)," +
+                    "photoId varchar (100))");
             ((PreparedStatement) st).execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,11 +55,12 @@ public class DBStore implements Store {
     public User add(User model) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement st = connection.prepareStatement("insert into users" +
-                     "(name, login, email, create_date) values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                     "(name, login, email, create_date, photoId) values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             st.setString(1, model.getName());
             st.setString(2, model.getLogin());
             st.setString(3, model.getEmail());
             st.setString(4, model.getCreateDate().toString());
+            st.setString(5,model.getPhotoId());
             st.executeUpdate();
             try (ResultSet id = st.getGeneratedKeys()) {
                 if (id.next()) {
@@ -107,7 +109,8 @@ public class DBStore implements Store {
                         rs.getString("name"),
                         rs.getString("login"),
                         rs.getString("email"),
-                        parseDate(rs.getString("create_date"))));
+                        parseDate(rs.getString("create_date")),
+                        rs.getString("photoId")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,7 +130,8 @@ public class DBStore implements Store {
                         rs.getString("name"),
                         rs.getString("login"),
                         rs.getString("email"),
-                        parseDate(rs.getString("create_date")));
+                        parseDate(rs.getString("create_date")),
+                        rs.getString("photoId"));
 
             }
         } catch (Exception e) {
