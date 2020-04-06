@@ -51,7 +51,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.controller.UploadServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.miniApp.UploadServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
@@ -59,7 +59,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.controller.DownloadServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.miniApp.DownloadServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>

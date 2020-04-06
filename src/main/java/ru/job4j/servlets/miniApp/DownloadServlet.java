@@ -1,4 +1,4 @@
-package ru.job4j.servlets.controller;
+package ru.job4j.servlets.miniApp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

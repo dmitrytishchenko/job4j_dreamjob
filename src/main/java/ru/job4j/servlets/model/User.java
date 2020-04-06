@@ -9,11 +9,6 @@ public class User {
     private String login;
     private String email;
     private Date createDate;
-
-    public String getPhotoId() {
-        return photoId;
-    }
-
     private String photoId;
 
     public User(String name) {
@@ -92,5 +87,13 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, login, email, createDate);
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
+    public String getPhotoId() {
+        return photoId;
     }
 }
