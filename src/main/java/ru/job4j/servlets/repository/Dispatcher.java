@@ -2,6 +2,7 @@ package ru.job4j.servlets.repository;
 
 import ru.job4j.servlets.model.User;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class Dispatcher {
 
     private Dispatcher() {
         init();
+        addRoot(new User("root", "root", "root", "root@mail.ru", new Date(), "root"));
     }
 
     public static Dispatcher getDispatcher() {
@@ -56,6 +58,29 @@ public class Dispatcher {
             if (act.equals(action)) {
                 this.dispatch.get(act).accept(user);
             }
+        }
+    }
+
+    public boolean isCredential(String login, String password) {
+        boolean result = false;
+        for (User user : logic.findAll()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public void addRoot(User user) {
+        if (logic.findAll().size() != 0) {
+            for (User u : logic.findAll()) {
+                if (u.getLogin().equals("root")) {
+                    break;
+                }
+            }
+        } else {
+            this.logic.add(user);
         }
     }
 }

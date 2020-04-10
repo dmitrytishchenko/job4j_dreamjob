@@ -48,4 +48,6 @@ public class ValidateService implements Validate {
     public User findById(int id) {
         return logic.findById(id);
     }
+
+
 }

@@ -42,6 +42,7 @@ public class DBStore implements Store {
                     "(id serial primary key," +
                     "name varchar(100)," +
                     "login varchar(100)," +
+                    "password varchar(100)," +
                     "email varchar(100)," +
                     "create_date varchar (100)," +
                     "photoId varchar (100))");
@@ -55,12 +56,13 @@ public class DBStore implements Store {
     public User add(User model) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement st = connection.prepareStatement("insert into users" +
-                     "(name, login, email, create_date, photoId) values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                     "(name, login, password, email, create_date, photoId) values (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             st.setString(1, model.getName());
             st.setString(2, model.getLogin());
-            st.setString(3, model.getEmail());
-            st.setString(4, model.getCreateDate().toString());
-            st.setString(5,model.getPhotoId());
+            st.setString(3, model.getPassword());
+            st.setString(4, model.getEmail());
+            st.setString(5, model.getCreateDate().toString());
+            st.setString(6,model.getPhotoId());
             st.executeUpdate();
             try (ResultSet id = st.getGeneratedKeys()) {
                 if (id.next()) {
@@ -108,6 +110,7 @@ public class DBStore implements Store {
                 userList.add(new User(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("login"),
+                        rs.getString("password"),
                         rs.getString("email"),
                         parseDate(rs.getString("create_date")),
                         rs.getString("photoId")));
@@ -129,6 +132,7 @@ public class DBStore implements Store {
                 result = new User(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("login"),
+                        rs.getString("password"),
                         rs.getString("email"),
                         parseDate(rs.getString("create_date")),
                         rs.getString("photoId"));

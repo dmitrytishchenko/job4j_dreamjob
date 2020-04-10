@@ -65,4 +65,12 @@
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Signin</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.SigninController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Signin</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
 </web-app>

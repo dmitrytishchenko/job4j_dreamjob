@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,9 +29,16 @@ public class UsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", Dispatcher.getDispatcher().findAll());
-        LOG.trace("Установка аттрибута users = " + Dispatcher.getDispatcher().findAll().size());
-        req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
+        HttpSession session = req.getSession(false);
+        synchronized (session) {
+            if (session == null || req.getAttribute("login") == null) {
+                resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
+            } else {
+                req.setAttribute("users", Dispatcher.getDispatcher().findAll());
+                LOG.trace("Установка аттрибута users = " + Dispatcher.getDispatcher().findAll().size());
+                req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
+            }
+        }
     }
 
     @Override
@@ -72,6 +80,7 @@ public class UsersController extends HttpServlet {
             Dispatcher.getDispatcher().createNewUser(new User(
                     fields.get("name"),
                     fields.get("login"),
+                    null,
                     fields.get("email"),
                     new Date(),
                     newFile.getName()));
