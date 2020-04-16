@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.servlets.model.Role;
 import ru.job4j.servlets.repository.Dispatcher;
 import ru.job4j.servlets.model.User;
 
@@ -29,16 +30,11 @@ public class UsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        synchronized (session) {
-            if (session == null || req.getAttribute("login") == null) {
-                resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
-            } else {
-                req.setAttribute("users", Dispatcher.getDispatcher().findAll());
-                LOG.trace("Установка аттрибута users = " + Dispatcher.getDispatcher().findAll().size());
-                req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
-            }
-        }
+
+            req.setAttribute("users", Dispatcher.getDispatcher().findAll());
+            LOG.trace("Установка аттрибута users = " + Dispatcher.getDispatcher().findAll().size());
+            req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
+
     }
 
     @Override
@@ -80,8 +76,9 @@ public class UsersController extends HttpServlet {
             Dispatcher.getDispatcher().createNewUser(new User(
                     fields.get("name"),
                     fields.get("login"),
-                    null,
+                    fields.get("password"),
                     fields.get("email"),
+                    new Role(fields.get("role")),
                     new Date(),
                     newFile.getName()));
         } catch (FileUploadException e) {

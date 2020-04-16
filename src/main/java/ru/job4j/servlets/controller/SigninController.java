@@ -1,5 +1,6 @@
 package ru.job4j.servlets.controller;
 
+import ru.job4j.servlets.model.User;
 import ru.job4j.servlets.repository.Dispatcher;
 
 import javax.servlet.ServletException;
@@ -23,13 +24,24 @@ public class SigninController extends HttpServlet {
         String password = req.getParameter("password");
         if (Dispatcher.getDispatcher().isCredential(login, password)) {
             HttpSession session = req.getSession();
-            synchronized (session) {
                 session.setAttribute("login", login);
-            }
-            resp.sendRedirect(String.format("%s/", req.getContextPath()));
+                User user = Dispatcher.getDispatcher().getRole(login, password);
+                req.setAttribute("user", user);
+                String role = user.getRole();
+                goToMenu(req, resp, role);
         } else {
             req.setAttribute("error", "Credential invalid");
             doGet(req, resp);
+        }
+    }
+
+    public void goToMenu(HttpServletRequest req, HttpServletResponse resp, String role) throws ServletException, IOException {
+        if (role.equals("admin")) {
+            req.getRequestDispatcher(String.format("%s/", req.getContextPath())).forward(req, resp);
+        } else if (role.equals("user")) {
+            req.getRequestDispatcher("WEB-INF/views/UserRoleView.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("WEB-INF/views/GuestRoleView.jsp").forward(req, resp);
         }
     }
 }

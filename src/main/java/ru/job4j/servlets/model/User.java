@@ -11,27 +11,31 @@ public class User {
     private String email;
     private Date createDate;
     private String photoId;
+    private Role role;
 
     public User(String name) {
         this.name = name;
     }
 
 
-    public User(int id, String name, String login, String password, String email, Date createDate, String photoId) {
+    public User(int id, String name, String login, String password, String email, Role role, Date createDate, String photoId) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
         this.createDate = createDate;
         this.photoId = photoId;
     }
 
-    public User(String name, String login, String password, String email, Date createDate, String photoId) {
+
+    public User(String name, String login, String password, String email, Role role, Date createDate, String photoId) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
         this.createDate = createDate;
         this.photoId = photoId;
     }
@@ -76,6 +80,10 @@ public class User {
         this.createDate = createDate;
     }
 
+    public String getRole() {
+        return role.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,5 +111,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

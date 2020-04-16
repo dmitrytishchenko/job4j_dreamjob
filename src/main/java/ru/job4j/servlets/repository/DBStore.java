@@ -4,6 +4,7 @@ package ru.job4j.servlets.repository;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.servlets.model.Role;
 import ru.job4j.servlets.model.User;
 
 import java.sql.*;
@@ -40,13 +41,16 @@ public class DBStore implements Store {
             Connection connection = SOURCE.getConnection();
             Statement st = connection.prepareStatement("create TABLE if not exists users" +
                     "(id serial primary key," +
-                    "name varchar(100)," +
-                    "login varchar(100)," +
-                    "password varchar(100)," +
-                    "email varchar(100)," +
+                    "name varchar(20)," +
+                    "login varchar(20)," +
+                    "password varchar(20)," +
+                    "email varchar(20)," +
+                    "role varchar(20)," +
                     "create_date varchar (100)," +
-                    "photoId varchar (100))");
+                    "photoId varchar (50))");
             ((PreparedStatement) st).execute();
+            connection.close();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,13 +60,14 @@ public class DBStore implements Store {
     public User add(User model) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement st = connection.prepareStatement("insert into users" +
-                     "(name, login, password, email, create_date, photoId) values (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                     "(name, login, password, email, role, create_date, photoId) values (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             st.setString(1, model.getName());
             st.setString(2, model.getLogin());
             st.setString(3, model.getPassword());
             st.setString(4, model.getEmail());
-            st.setString(5, model.getCreateDate().toString());
-            st.setString(6,model.getPhotoId());
+            st.setString(5, model.getRole());
+            st.setString(6, model.getCreateDate().toString());
+            st.setString(7,model.getPhotoId());
             st.executeUpdate();
             try (ResultSet id = st.getGeneratedKeys()) {
                 if (id.next()) {
@@ -79,9 +84,16 @@ public class DBStore implements Store {
     @Override
     public void update(User model) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement st = connection.prepareStatement("update users set name = ? where id = ?")) {
+             PreparedStatement st = connection.prepareStatement("update users set name = ?," +
+                     " login = ?," +
+                     " email = ?," +
+                     " role = ?" +
+                     " where id = ?")) {
             st.setString(1, model.getName());
-            st.setInt(2, model.getId());
+            st.setString(2, model.getLogin());
+            st.setString(3, model.getEmail());
+            st.setString(4, model.getRole());
+            st.setInt(5, model.getId());
             st.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,13 +119,7 @@ public class DBStore implements Store {
              Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery("select * from users")) {
             while (rs.next()) {
-                userList.add(new User(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("login"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        parseDate(rs.getString("create_date")),
-                        rs.getString("photoId")));
+                userList.add(getUser(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,14 +135,7 @@ public class DBStore implements Store {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                result = new User(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("login"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        parseDate(rs.getString("create_date")),
-                        rs.getString("photoId"));
-
+                result = getUser(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,6 +149,23 @@ public class DBStore implements Store {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
             result = simpleDateFormat.parse(date);
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public User getUser(ResultSet rs) {
+        User result = null;
+        try {
+            result = new User(rs.getInt("id"),
+                     rs.getString("name"),
+                     rs.getString("login"),
+                     rs.getString("password"),
+                     rs.getString("email"),
+                     new Role(rs.getString("role")),
+                     parseDate(rs.getString("create_date")),
+                     rs.getString("photoId"));
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;

@@ -73,4 +73,36 @@
         <servlet-name>Signin</servlet-name>
         <url-pattern>/signin</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.Edit</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Delete User</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.Delete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete User</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Exit Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.ExitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exit Servlet</servlet-name>
+        <url-pattern>/exit</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.servlets.controller.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 </web-app>

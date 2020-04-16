@@ -1,5 +1,6 @@
 package ru.job4j.servlets.repository;
 
+import ru.job4j.servlets.model.Role;
 import ru.job4j.servlets.model.User;
 
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Dispatcher {
 
     private Dispatcher() {
         init();
-        addRoot(new User("root", "root", "root", "root@mail.ru", new Date(), "root"));
+        addRoot(new User("admin", "admin", "admin", "admin@mail.ru", new Role("admin"), new Date(), "Admin"));
     }
 
     public static Dispatcher getDispatcher() {
@@ -72,10 +73,20 @@ public class Dispatcher {
         return result;
     }
 
+    public User getRole(String login, String password) {
+        User result = null;
+        for (User user : logic.findAll()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                result = user;
+            }
+        }
+        return result;
+    }
+
     public void addRoot(User user) {
         if (logic.findAll().size() != 0) {
             for (User u : logic.findAll()) {
-                if (u.getLogin().equals("root")) {
+                if (u.getLogin().equals("admin")) {
                     break;
                 }
             }

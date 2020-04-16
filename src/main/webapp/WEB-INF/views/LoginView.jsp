@@ -12,17 +12,16 @@
     <title>Login View</title>
 </head>
 <body>
-<c:if test="${'error' != ''}">
+<h3>Insert login and password</h3>
+<c:if test="${error != ''}">
     <div style="background-color: red">
-        <c:out value="${'error'}"/>
+        <c:out value="${error}"/>
     </div>
 </c:if>
 <form action="${pageContext.servletContext.contextPath}/signin" method="post">
-
     Login : <input type="text" name="login"></br>
     Password : <input type="password" name="password"></br>
-
-   <input type="submit">
+    <button type="submit" class="btn btn-default">Submit</button>
 </form>
 </body>
 </html>

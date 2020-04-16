@@ -25,11 +25,11 @@ public class ValidateService implements Validate {
 
     public void update(User user) {
         logic.update(user);
-        if (logic.findById(user.getId()).getName().equals(user.getName())) {
-            System.out.println("The User is update");
-        } else {
-            throw new IllegalStateException("The User is not update");
-        }
+//        if (logic.findById(user.getId()).getName().equals(user.getName())) {
+//            System.out.println("The User is update");
+//        } else {
+//            throw new IllegalStateException("The User is not update");
+//        }
     }
 
     public void delete(User user) {
