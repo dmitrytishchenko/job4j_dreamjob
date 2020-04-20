@@ -12,7 +12,7 @@ public class MemoryStore implements Store {
     private MemoryStore() {
     }
 
-    public static MemoryStore getMemoryStore() {
+    public static MemoryStore getInstance() {
         return MEMORY_STORE;
     }
 

@@ -5,7 +5,7 @@ import ru.job4j.servlets.model.User;
 import java.util.List;
 
 public interface Validate {
-    void add(User user);
+    User add(User user);
 
     void update(User user);
 

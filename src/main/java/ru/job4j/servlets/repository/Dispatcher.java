@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class Dispatcher {
-    private final Validate logic = ValidateService.getValidateService();
+    private final Validate logic = ValidateService.getInstance();
     private Map<String, Consumer<User>> dispatch = new HashMap<>();
     private static final Dispatcher DISPATCHER = new Dispatcher();
 

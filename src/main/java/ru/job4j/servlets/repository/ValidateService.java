@@ -12,15 +12,16 @@ public class ValidateService implements Validate {
     private ValidateService() {
     }
 
-    public static ValidateService getValidateService() {
+    public static ValidateService getInstance() {
         return VALIDATE_SERVICE;
     }
 
-    public void add(User user) {
+    public User add(User user) {
         if (logic.findById(user.getId()) != null) {
             throw new NullPointerException("The User is exists");
         }
         this.logic.add(user);
+        return user;
     }
 
     public void update(User user) {
