@@ -2,40 +2,43 @@ package ru.job4j.servlets.repository;
 
 import ru.job4j.servlets.model.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ValidateService implements Validate {
     private static final ValidateService VALIDATE_SERVICE = new ValidateService();
-    private final Store logic = DBStore.getInstance();
-//    private final Store logic = MemoryStore.getMemoryStore();
+
+    public static class Holder {
+        private static final Store logic = DBStore.getInstance();
+    }
 
     private ValidateService() {
     }
 
-    public static ValidateService getInstance() {
+    public static Validate getInstance() {
         return VALIDATE_SERVICE;
     }
 
     public User add(User user) {
-        if (logic.findById(user.getId()) != null) {
+        if (Holder.logic.findById(user.getId()) != null) {
             throw new NullPointerException("The User is exists");
         }
-        this.logic.add(user);
+        Holder.logic.add(user);
         return user;
     }
 
     public void update(User user) {
-        logic.update(user);
-//        if (logic.findById(user.getId()).getName().equals(user.getName())) {
-//            System.out.println("The User is update");
-//        } else {
-//            throw new IllegalStateException("The User is not update");
-//        }
+        if (Holder.logic.findById(user.getId()).getName().equals(user.getName())) {
+            Holder.logic.update(user);
+            System.out.println("The User is update");
+        } else {
+            throw new IllegalStateException("The User is not update");
+        }
     }
 
     public void delete(User user) {
-        logic.delete(user);
-        for (User u : logic.findAll()) {
+        Holder.logic.delete(user);
+        for (User u : Holder.logic.findAll()) {
             if (u.equals(user)) {
                 throw new IllegalStateException("The User is not delete");
             }
@@ -43,12 +46,10 @@ public class ValidateService implements Validate {
     }
 
     public List<User> findAll() {
-        return logic.findAll();
+        return Holder.logic.findAll();
     }
 
     public User findById(int id) {
-        return logic.findById(id);
+        return Holder.logic.findById(id);
     }
-
-
 }

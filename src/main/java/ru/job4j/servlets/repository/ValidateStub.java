@@ -13,10 +13,9 @@
 //        return STORE;
 //    }
 //}
-package ru.job4j.servlets.controller;
+package ru.job4j.servlets.repository;
 
 import ru.job4j.servlets.model.User;
-import ru.job4j.servlets.repository.Validate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,16 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ValidateStub implements Validate {
-    private static final ValidateStub validate = new ValidateStub();
     private final Map<Integer, User> store = new HashMap<>();
     private int ids = 0;
-
-    private ValidateStub() {
-    }
-
-    public static ValidateStub getInstance() {
-        return validate;
-    }
 
     @Override
     public User add(User user) {
@@ -44,12 +35,25 @@ public class ValidateStub implements Validate {
 
     @Override
     public void update(User user) {
-
+        for (User u : this.store.values()) {
+            if (u.getId() == user.getId()) {
+                u.setName(user.getName());
+                u.setLogin(user.getLogin());
+                u.setEmail(user.getEmail());
+                System.out.println("The User is update");
+            } else {
+                throw new IllegalStateException("The User is not update");
+            }
+        }
     }
 
     @Override
     public void delete(User user) {
-
+        for (User u : this.store.values()) {
+            if (u.getId() == user.getId()) {
+                this.store.remove(u.getId(), u);
+            }
+        }
     }
 
     @Override
@@ -59,6 +63,14 @@ public class ValidateStub implements Validate {
 
     @Override
     public User findById(int id) {
-        return null;
+        User result = null;
+        for (User user : this.store.values()) {
+            if (user.getId() == id) {
+                result = user;
+            } else {
+                throw new IllegalStateException("The user with this id not found");
+            }
+        }
+        return result;
     }
 }

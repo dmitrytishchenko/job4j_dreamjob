@@ -2,6 +2,8 @@ package ru.job4j.servlets.controller;
 
 import ru.job4j.servlets.repository.Dispatcher;
 import ru.job4j.servlets.model.User;
+import ru.job4j.servlets.repository.Validate;
+import ru.job4j.servlets.repository.ValidateService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UsersServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -21,13 +22,13 @@ public class UsersServlet extends HttpServlet {
             builder.append("<tr><td>" + user + "</td>" +
                     "<td>" +
                     "<form action=' " + req.getContextPath() + "/update' method='get'>" +
-                    "<input type='hidden' name='id' value='"+ user.getId() +"'/>" +
+                    "<input type='hidden' name='id' value='" + user.getId() + "'/>" +
                     "<button>EDIT</button>" +
                     "</form>" +
                     "</td>" +
                     "<td>" +
                     "<form action=' " + req.getContextPath() + "/users' method='post'>" +
-                    "<input type='hidden' name='id' value='"+ user.getId() +"'/>" +
+                    "<input type='hidden' name='id' value='" + user.getId() + "'/>" +
                     "<button>DELETE</button>" +
                     "</form>" +
                     "</td></tr>");
@@ -45,6 +46,7 @@ public class UsersServlet extends HttpServlet {
                 "</html>");
         writer.flush();
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");

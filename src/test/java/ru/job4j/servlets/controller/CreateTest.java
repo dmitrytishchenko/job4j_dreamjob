@@ -73,12 +73,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import ru.job4j.servlets.model.User;
 import ru.job4j.servlets.repository.Validate;
 import ru.job4j.servlets.repository.ValidateService;
+import ru.job4j.servlets.repository.ValidateStub;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -92,13 +91,13 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(ValidateService.class)
+@PrepareForTest({ValidateService.class})
 public class CreateTest{
     @Test
     public void whenAddUserThenStoreIt() throws ServletException, IOException {
-        Validate validate = ValidateStub.getInstance();
+        Validate validate = new ValidateStub();
         PowerMockito.mockStatic(ValidateService.class);
-        Mockito.when(ValidateService.getInstance()).thenReturn(validate);
+        PowerMockito.when(ValidateService.getInstance()).thenReturn(validate);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         when(req.getParameter("name")).thenReturn("Petr Arsentev");
