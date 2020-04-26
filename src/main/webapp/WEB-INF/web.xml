@@ -97,12 +97,37 @@
         <servlet-name>Exit Servlet</servlet-name>
         <url-pattern>/exit</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Json Controller</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.JsonController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Json Controller</servlet-name>
+        <url-pattern>/json</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Greeting Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.controller.GreetingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Greeting Servlet</servlet-name>
+        <url-pattern>/greet</url-pattern>
+    </servlet-mapping>
     <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>ru.job4j.servlets.controller.AuthFilter</filter-class>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>ru.job4j.servlets.controller.CorsFilter</filter-class>
     </filter>
+
     <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>*</url-pattern>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--<filter>-->
+        <!--<filter-name>AuthFilter</filter-name>-->
+        <!--<filter-class>ru.job4j.servlets.controller.AuthFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>AuthFilter</filter-name>-->
+        <!--<url-pattern>*</url-pattern>-->
+    <!--</filter-mapping>-->
 </web-app>
