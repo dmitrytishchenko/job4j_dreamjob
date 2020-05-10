@@ -29,9 +29,8 @@ public class UsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            req.setAttribute("users", Dispatcher.getDispatcher().findAll());
-            req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
-
+        req.setAttribute("users", Dispatcher.getDispatcher().findAll());
+        req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req, resp);
     }
 
     @Override
@@ -62,14 +61,18 @@ public class UsersController extends HttpServlet {
                     fields.put(item.getFieldName(), item.getString());
                 }
             }
+            Dispatcher.getDispatcher().checkInputValues(fields.get("name"), fields.get("login"), fields.get("password"));
+            String country = Dispatcher.getDispatcher().getCountryFromId(Integer.valueOf(fields.get("country")));
             Dispatcher.getDispatcher().createNewUser(new User(
                     fields.get("name"),
                     fields.get("login"),
                     fields.get("password"),
                     fields.get("email"),
-                    new Role(fields.get("role")),
+                    country,
+                    fields.get("city"),
                     new Date(),
-                    newFile.getName()));
+                    newFile.getName(),
+                    new Role(fields.get("role"))));
         } catch (FileUploadException e) {
             e.printStackTrace();
         }

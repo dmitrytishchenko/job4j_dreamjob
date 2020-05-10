@@ -18,6 +18,8 @@
         <th>Name</th>
         <th>Login</th>
         <th>Email</th>
+        <th>Country</th>
+        <th>City</th>
         <th>Role</th>
         <th>Date</th>
         <th>PhotoId</th>
@@ -27,6 +29,8 @@
         <td><c:out value="${requestScope.user.name}"></c:out></td>
         <td><c:out value="${requestScope.user.login}"></c:out></td>
         <td><c:out value="${requestScope.user.email}"></c:out></td>
+        <td><c:out value="${requestScope.user.country}"></c:out></td>
+        <td><c:out value="${requestScope.user.city}"></c:out></td>
         <td><c:out value="${requestScope.user.role}"></c:out></td>
         <td><c:out value="${requestScope.user.createDate}"></c:out></td>
         <td>

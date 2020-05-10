@@ -2,6 +2,7 @@ package ru.job4j.servlets.controller;
 
 import ru.job4j.servlets.model.Role;
 import ru.job4j.servlets.model.User;
+import ru.job4j.servlets.repository.Dispatcher;
 import ru.job4j.servlets.repository.Validate;
 import ru.job4j.servlets.repository.ValidateService;
 
@@ -29,8 +30,10 @@ public class Edit extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String email = req.getParameter("email");
+        String country = Dispatcher.getDispatcher().getCountryFromId(Integer.valueOf(req.getParameter("country")));
+        String city = req.getParameter("cities");
         User user = validate.findById(Integer.valueOf(id));
-        User newUser = new User(user.getId(), name, login, user.getPassword(), email, new Role(user.getRole()), new Date(), user.getPhotoId());
+        User newUser = new User(user.getId(), name, login, user.getPassword(), email, country, city, new Role(user.getRole()), new Date(), user.getPhotoId());
         validate.update(newUser);
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
 

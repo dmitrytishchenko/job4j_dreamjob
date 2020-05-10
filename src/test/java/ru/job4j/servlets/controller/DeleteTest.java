@@ -28,7 +28,7 @@ public class DeleteTest {
     @Test
     public void whenAddUserThenDelete() throws ServletException, IOException {
         Validate validate = new ValidateStub();
-        User user = new User("Dmitriy", "tdmitriu", "1", "tdmitriu@mail.ru", new Role("user"), new Date(), "photo");
+        User user = new User("Dimitry", "tdmitriu", "1", "tdmitriu@mail.ru", "USA", "NY", new Date(), "photo", new Role("user"));
         validate.add(user);
         PowerMockito.mockStatic(ValidateService.class);
         PowerMockito.when(ValidateService.getInstance()).thenReturn(validate);

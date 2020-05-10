@@ -6,8 +6,14 @@ import java.util.List;
 
 public interface Store {
     User add(User user);
-    void update(User user);
+    boolean update(User user);
     void delete(User user);
-    List<User> findAll();
     User findById(int id);
+    List<User> findAll();
+    List<String> findAllCities();
+    List<String> findAllCountries();
+    String addCountry(String country);
+    void addCity(String city, int countryId);
+    String getCountryFromId(int countryId);
+    List<String> getCitiesFromCountry(int countryId);
 }

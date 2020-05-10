@@ -10,15 +10,22 @@
 <html>
 <head>
     <title>Delete User</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h3>This is a user that need deleted</h3>
-<table style="border: red" cellpadding="1" , cellspacing="1" , border="1">
+<table class="form-horizontal" style="border: red" cellpadding="1" , cellspacing="1" , border="1">
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Login</th>
         <th>Email</th>
+        <th>Country</th>
+        <th>City</th>
         <th>Role</th>
         <th>Date</th>
         <th>PhotoId</th>
@@ -28,6 +35,8 @@
         <td><c:out value="${requestScope.user.name}"></c:out></td>
         <td><c:out value="${requestScope.user.login}"></c:out></td>
         <td><c:out value="${requestScope.user.email}"></c:out></td>
+        <td><c:out value="${requestScope.user.country}"></c:out></td>
+        <td><c:out value="${requestScope.user.city}"></c:out></td>
         <td><c:out value="${requestScope.user.role}"></c:out></td>
         <td><c:out value="${requestScope.user.createDate}"></c:out></td>
         <td>

@@ -16,7 +16,8 @@ public class Dispatcher {
 
     private Dispatcher() {
         init();
-        addRoot(new User("admin", "admin", "admin", "admin@mail.ru", new Role("admin"), new Date(), "Admin"));
+        addRoot(new User("admin", "admin", "admin", "admin@mail.ru", "Russia", "MSC", new Date(), "Admin", new Role("admin")));
+        addRootCountryAndCity();
     }
 
     public static Dispatcher getDispatcher() {
@@ -27,8 +28,8 @@ public class Dispatcher {
         this.logic.add(user);
     }
 
-    public void update(User user) {
-        this.logic.update(user);
+    public boolean update(User user) {
+        return this.logic.update(user);
     }
 
     public void delete(User user) {
@@ -83,7 +84,7 @@ public class Dispatcher {
         return result;
     }
 
-    public void addRoot(User user) {
+    private void addRoot(User user) {
         if (logic.findAll().size() != 0) {
             for (User u : logic.findAll()) {
                 if (u.getLogin().equals("admin")) {
@@ -94,4 +95,34 @@ public class Dispatcher {
             this.logic.add(user);
         }
     }
+
+    private void addCountry(String country) {
+        logic.addCountry(country);
+    }
+
+    private void addCity(String city, int countryId) {
+        logic.addCity(city, countryId);
+    }
+
+    private void addRootCountryAndCity() {
+        addCountry("Russia");
+        addCountry("USA");
+        addCity("MSC", 1);
+        addCity("SPB", 1);
+        addCity("LA", 2);
+        addCity("NY", 2);
+    }
+
+    public String getCountryFromId(int countryId) {
+        return logic.getCountryFromId(countryId);
+    }
+
+    public List<String> getCitiesFromCountry(int countryId) {
+        return logic.getCitiesFromCountry(countryId);
+    }
+
+    public boolean checkInputValues(String name, String login, String password) {
+        return logic.checkInputValues(name, login, password);
+    }
+
 }

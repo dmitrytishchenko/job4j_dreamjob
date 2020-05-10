@@ -27,13 +27,35 @@ public class ValidateService implements Validate {
         return user;
     }
 
-    public void update(User user) {
-        if (Holder.logic.findById(user.getId()).getName().equals(user.getName())) {
-            Holder.logic.update(user);
-            System.out.println("The User is update");
+    @Override
+    public String addCountry(String country) {
+        Holder.logic.addCountry(country);
+        return country;
+    }
+
+    @Override
+    public void addCity(String city, int countryId) {
+        Holder.logic.addCity(city, countryId);
+    }
+
+    @Override
+    public String getCountryFromId(int countryId) {
+        return Holder.logic.getCountryFromId(countryId);
+    }
+
+    @Override
+    public boolean checkInputValues(String name, String login, String password) {
+        boolean result = false;
+        if (!name.equals(login) && !login.equals(password) && !name.equals(password)) {
+            result = true;
         } else {
-            throw new IllegalStateException("The User is not update");
+            throw new IllegalStateException("Insert the correct data");
         }
+        return result;
+    }
+
+    public boolean update(User user) {
+        return Holder.logic.update(user);
     }
 
     public void delete(User user) {
@@ -49,7 +71,21 @@ public class ValidateService implements Validate {
         return Holder.logic.findAll();
     }
 
+    @Override
+    public List<String> findAllCities() {
+        return Holder.logic.findAllCities();
+    }
+
+    @Override
+    public List<String> findAllCountries() {
+        return Holder.logic.findAllCountries();
+    }
+
     public User findById(int id) {
         return Holder.logic.findById(id);
+    }
+
+    public List<String> getCitiesFromCountry(int countryId) {
+        return Holder.logic.getCitiesFromCountry(countryId);
     }
 }

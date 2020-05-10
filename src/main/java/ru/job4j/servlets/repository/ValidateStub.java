@@ -34,17 +34,20 @@ public class ValidateStub implements Validate {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
+        boolean result = false;
         for (User u : this.store.values()) {
             if (u.getId() == user.getId()) {
                 u.setName(user.getName());
                 u.setLogin(user.getLogin());
                 u.setEmail(user.getEmail());
                 System.out.println("The User is update");
+                result = true;
             } else {
                 throw new IllegalStateException("The User is not update");
             }
         }
+        return result;
     }
 
     @Override
@@ -62,6 +65,16 @@ public class ValidateStub implements Validate {
     }
 
     @Override
+    public List<String> findAllCities() {
+        return null;
+    }
+
+    @Override
+    public List<String> findAllCountries() {
+        return null;
+    }
+
+    @Override
     public User findById(int id) {
         User result = null;
         for (User user : this.store.values()) {
@@ -72,5 +85,29 @@ public class ValidateStub implements Validate {
             }
         }
         return result;
+    }
+
+    @Override
+    public String addCountry(String country) {
+        return null;
+    }
+
+    @Override
+    public void addCity(String city, int countryId) {
+    }
+
+    @Override
+    public String getCountryFromId(int countryId) {
+        return null;
+    }
+
+    @Override
+    public List<String> getCitiesFromCountry(int countryId) {
+        return null;
+    }
+
+    @Override
+    public boolean checkInputValues(String name, String login, String password) {
+        return false;
     }
 }

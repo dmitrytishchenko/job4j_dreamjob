@@ -28,9 +28,11 @@ public class Create extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        String city = req.getParameter("city");
         String role = req.getParameter("role");
         String photoId = req.getParameter("photoId");
-        validate.add(new User(name, login, password, email, new Role(role), new Date(), photoId));
+        validate.add(new User(name, login, password, email, country, city, new Date(), photoId, new Role(role)));
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

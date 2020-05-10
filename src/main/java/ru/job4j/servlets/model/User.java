@@ -9,6 +9,8 @@ public class User {
     private String login;
     private String password;
     private String email;
+    private String country;
+    private String city;
     private Date createDate;
     private String photoId;
     private Role role;
@@ -17,27 +19,29 @@ public class User {
         this.name = name;
     }
 
-
-    public User(int id, String name, String login, String password, String email, Role role, Date createDate, String photoId) {
+    public User(int id, String name, String login, String password, String email, String country, String city, Role role, Date createDate, String photoId) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.country = country;
+        this.city = city;
         this.createDate = createDate;
         this.photoId = photoId;
+        this.role = role;
     }
 
-
-    public User(String name, String login, String password, String email, Role role, Date createDate, String photoId) {
+    public User(String name, String login, String password, String email, String country, String city, Date createDate, String photoId, Role role) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.country = country;
+        this.city = city;
         this.createDate = createDate;
         this.photoId = photoId;
+        this.role = role;
     }
 
     public int getId() {
@@ -116,5 +120,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

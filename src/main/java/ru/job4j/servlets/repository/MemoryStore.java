@@ -23,12 +23,15 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
+        boolean result = false;
         for (User u : this.userList) {
             if (u.getId() == user.getId()) {
                 u.setName(user.getName());
+                result = true;
             }
         }
+        return result;
     }
 
     @Override
@@ -46,6 +49,16 @@ public class MemoryStore implements Store {
     }
 
     @Override
+    public List<String> findAllCities() {
+        return null;
+    }
+
+    @Override
+    public List<String> findAllCountries() {
+        return null;
+    }
+
+    @Override
     public User findById(int id) {
         User result = null;
         for (User user : this.userList) {
@@ -54,5 +67,24 @@ public class MemoryStore implements Store {
             }
         }
         return result;
+    }
+
+    @Override
+    public String addCountry(String country) {
+        return country;
+    }
+
+    @Override
+    public void addCity(String city, int countryId) {
+    }
+
+    @Override
+    public String getCountryFromId(int countryId) {
+        return null;
+    }
+
+    @Override
+    public List<String> getCitiesFromCountry(int countryId) {
+        return null;
     }
 }

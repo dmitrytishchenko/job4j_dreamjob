@@ -57,6 +57,28 @@
                '<td>' + desc + '</td>' +
                '</tr>')
         }
+        function ajax() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/items/json'
+            }).done(function(data) {
+
+                if (data != undefined) {
+                    var mas = JSON.parse(data);
+                    for (var i = 0; i != mas.length; ++i) {
+                        var result ="<tr>\n" +
+                            "            <th>"+ mas[i].FirstName+ "</th>\n" +
+                            "            <th>"+ mas[i].LastName+ "</th>\n" +
+                            "            <th>"+ mas[i].sex + "</th>\n" +
+                            "            <th>"+ mas[i].Description + "</th>\n" +
+                            "        </tr>";
+                    }
+                    $('#table tr:last').after(result);
+                }
+            }).fail(function(err){
+                alert(err);
+            });
+        }
     </script>
 </head>
 <body>
@@ -90,6 +112,7 @@
         </div>
         <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
         <button type="button" class="btn btn-default" onclick="addRow()">AddRow</button>
+        <button type="button" class="btn btn-default" onclick="ajax()">Ajax</button>
     </form>
 </div>
 
