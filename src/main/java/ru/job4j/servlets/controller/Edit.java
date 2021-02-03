@@ -30,7 +30,7 @@ public class Edit extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String email = req.getParameter("email");
-        String country = Dispatcher.getDispatcher().getCountryFromId(Integer.valueOf(req.getParameter("country")));
+        String country = Dispatcher.getDispatcher().getCountryFromId(Integer.valueOf(req.getParameter("id")));
         String city = req.getParameter("cities");
         User user = validate.findById(Integer.valueOf(id));
         User newUser = new User(user.getId(), name, login, user.getPassword(), email, country, city, new Role(user.getRole()), new Date(), user.getPhotoId());

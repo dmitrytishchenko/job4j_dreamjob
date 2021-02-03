@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var result = true;
+            var fName = $('#FirstName').val();
+            console.log(fName);
+            if (fName == '') {
+                alert($('#FirstName').attr('placeholder'));
+
+                result = false;
+            }
+            var LName = $('#LastName').val();
+            console.log(LName);
+            if (LName == '') {
+                alert($('#LastName').attr('placeholder'));
+                result = false;
+            }
+            console.log($('#male').checked);
+            console.log($('#female').checked);
+            var sex = document.getElementsByName("sex");
+            console.log(sex);
+            if (sex[0].checked != true && sex[1].checked != true) {
+                alert("Input value male or female");
+                result = false;
+            }
+            var desc = $('#desc').val();
+            if (desc == '') {
+                alert($('#desc').attr('placeholder'));
+                result = false;
+            }
+            return result;
+        }
+        function addRow() {
+           var firstName = $('#FirstName').val();
+           var lastName = $('#LastName').val();
+           var sex = null;
+            var mas = document.getElementsByName("sex");
+            if (mas[0].checked == true) {
+                sex = 'male';
+            }
+            if (mas[1].checked == true) {
+                sex = 'female';
+            }
+           var desc = $('#desc').val();
+           $('#table tr:last').after('<tr>' +
+               '<td>' + firstName + '</td>' +
+               '<td>' + lastName + '</td>' +
+               '<td>' + sex + '</td>' +
+               '<td>' + desc + '</td>' +
+               '</tr>')
+        }
+        function ajax() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/items/json'
+            }).done(function(data) {
+
+                if (data != undefined) {
+                    var mas = JSON.parse(data);
+                    for (var i = 0; i != mas.length; ++i) {
+                        var result ="<tr>\n" +
+                            "            <th>"+ mas[i].FirstName+ "</th>\n" +
+                            "            <th>"+ mas[i].LastName+ "</th>\n" +
+                            "            <th>"+ mas[i].sex + "</th>\n" +
+                            "            <th>"+ mas[i].Description + "</th>\n" +
+                            "        </tr>";
+                    }
+                    $('#table tr:last').after(result);
+                }
+            }).fail(function(err){
+                alert(err);
+            });
+        }
+    </script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h1>My First Bootstrap Page</h1>
+    <p>This is some text.</p>
+</div>
+<div class="container">
+    <h2> index.html + bootstrap, form, table[#218020]</h2>
+    <form action="/ExampleJS.html">
+        <div class="form-group">
+            <label for="FirstName">FirstName:</label>
+            <input type="text" class="form-control" id="FirstName" placeholder="Enter FirstName"
+                   name="FirstName">
+        </div>
+        <div class="form-group">
+            <label for="LastName">LastName:</label>
+            <input type="text" class="form-control" id="LastName" placeholder="Enter LastName"
+                   name="LastName">
+        </div>
+        <div>
+            <label for="male">Sex:</label></br>
+            <input type="radio" id="male" name="sex">Male</br>
+            <label for="female"></label>
+            <input type="radio" id="female" name="sex">Female</br>
+        </div>
+        <div class="form-group">
+            <label for="desc">Description:</label>
+            <input type="text" class="form-control" id="desc" placeholder="Enter description" name="description">
+        </div>
+        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
+        <button type="button" class="btn btn-default" onclick="addRow()">AddRow</button>
+        <button type="button" class="btn btn-default" onclick="ajax()">Ajax</button>
+    </form>
+</div>
+
+<div class="container">
+    <h2>Basic Table</h2>
+    <p> index.html + bootstrap, form, table[#218020] </p>
+    <table class="table" id="table" style="border: 1px solid #ff0000" border="1" , cellpadding="1" , cellspacing="1">
+        <thead>
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Sex</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>male</td>
+            <td>Some text</td>
+        </tr>
+        <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>female</td>
+            <td>Some text</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
